@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# prog="local-search-init-sbx4-local-search-mut-rrpt"
+prog="rand-init-sbx4-local-search-mut-select10"
+# prog="final-local-search-init-redundant-random-sbx4-local-search-mut-pc0.7-pm0.2"
+version=1.0
+solver="$prog-$version.jar"
+
+cache_dir="./cache/aTuan/test"
+# prefix="lunenu"
+aTuan="aTuan/test"
+prefix="l"
+# prefix="lunenu"
+ext_sample=".test"
+# cache_dir="./data_aTuan"
+# prefix="l"
+# ext_sample=""
+ext_output=".csv"
+
+pc=0.7
+pm=0.2
+
+out_dir_prefix="./mock/quynq/$prog-100000evals-1000Gen"
+# out_dir_prefix="./mock/quynq/$prog-100000evals"
+# out_dir_prefix="./mock/final/$prog-100000evals"
+# out_dir_prefix="./mock/shuffle/$prog-100000evals"
+# out_dir_prefix="./mock/test/heur_balance_100000_evals"
+
+target="ecmin"
+V=(190)
+# V=(100 110 120 130 140 150 160 170 180 190)
+# V=(100 150 200 250 300 350 400 450 500)
+R=(10 15 20)
+
+MAX_SEED=30
+
+nproc=$(nproc --all) # number of processor
+step=$((nproc/4))    # number of seed run parallel
+
+# step=$(echo "scale=0; $nproc/1.6" | bc)
+# step=$(echo "scale=0; $nproc/2.6" | bc)
+# step=$(echo "scale=0; $nproc/1.3" | bc)  # 6-CPU

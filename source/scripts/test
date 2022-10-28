@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+script_folder=$(dirname $0)
+source ${script_folder}/naming 
+
+folder_input="$(name_folder $1 $2 $3)"
+out_dir="${out_dir_prefix}/${folder_input}"
+out_file_path="${out_dir}/$(name_output $4 $5 $6)"
+
+INPUT="$(name_folder $1 $2 $3) $(name_folder $4 $5 $6)"
+echo "... Running $INPUT"
+
+TOTAL_SAMPLE=$((${#V[@]}*${#R[@]}))
+
+seed=1
+while [[ $seed -le $MAX_SEED ]]; do
+    java -cp target/netkeys-dat-1.0-SNAPSHOT.jar hust.mso.mfea.Main ${INPUT} ${seed}
+
+    ((seed++));
+done
+
+echo "[DONE]"
+

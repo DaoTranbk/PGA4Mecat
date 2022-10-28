@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+script_folder=$(dirname $0)
+source ${script_folder}/naming 
+
+# prog="final-mixed-rand-init-sbx-2points-poly-2points-v2"
+# out_dir_prefix="./mock/2-points-cr-mu/$prog-100000evals"
+# prefix="lnoenu"
+# target="melmax"
+output_file="${out_dir_prefix}/${target}/result/avg_${prefix}${ext_output}"
+
+INF=$((2**20))
+TOTAL_SAMPLE=$((${#V[@]}*${#R[@]}))
+
+head="Input, avgRuntime, ${target}, best, worst, std"
+
+# calculate the avg with the specific target for all tasks
+parse_partner() {
+    local log=""
+    local input_filename=$(name_output $1 $2 $3) 
+    local input=${out_dir_prefix}/$target/result/$input_filename
+
+    local avg=(0 0) # runtime, target
+    local std=0
+    local best=$INF
+    local worst=0
+
+    local i=0
+    local devide=$(echo "scale=2; 1.0/$MAX_SEED" | bc)
+
+    sed 1d $input | while IFS=, read -r seed runtime target
+    do
+        avg[0]=$(echo "${avg[0]}+${runtime}" | bc)
+        avg[1]=$(echo "${avg[1]}+${target}" | bc)
+
+        std=$(echo "${std} + ${target}^2" | bc)
+
+        if [ $(echo "${best} > ${target}" | bc -l) -eq 1 ]; then
+            best=$target
+        fi
+
+        if [ $(echo "${worst} < ${target}" | bc -l) -eq 1 ]; then
+            worst=$target
+        fi
+
+        ((i++))
+
+        if [ $i -eq $MAX_SEED ]; then 
+            std=$(echo "scale=2; ${std} - ${avg[1]}^2/${MAX_SEED}" | bc);
+            std=$(echo "scale=2; sqrt(${std}/(${MAX_SEED}-1))" | bc);
+
+            avg[0]=$(echo "scale=2; ${avg[0]}/${MAX_SEED}" | bc)
+            avg[1]=$(echo "scale=2; ${avg[1]}/${MAX_SEED}" | bc)
+            # std=$(echo "scale=4; ${std}/${avg[1]}" | bc);
+            # std=$(echo "scale=1; ${std}*100" | bc);
+
+            log="$1 $2 $3, ${avg[0]}, ${avg[1]}, ${best}, ${worst}, ${std}"
+            echo $log >> $output_file
+            echo $log
+
+            break;
+        fi
+    done 
+}
+
+echo "...Save to $output_file"
+
+echo $head > $output_file
+
+for r in "${R[@]}"; do
+for v in "${V[@]}"; do
+        input_filename=$(name_output $v $1 $r) 
+        echo "...Parsing $input_filename"
+        parse_partner $v $1 $r
+    done
+done

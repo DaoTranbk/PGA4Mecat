@@ -1,0 +1,70 @@
+java -cp target/final-mixed-rand-init-redundant-random-1.0.jar hust.mso.ga.Run_Heur lnoend_100_4_20 6 0.7 0.05
+717, 729, 738
+1080, 1089, 1098
+1350, 1377, 1395
+1773, 1770, 1797
+1965, 2028, 2043
+2343, 2403, 2406
+2754, 2799, 2829
+2883, 2997, 3054
+3405, 3486, 3555
+java -cp target/final-mixed-rand-init-redundant-random-1.0.jar hust.mso.ga.Run_Heur lnoend_100_4_20 6 0.7 0.05
+723, 723, 729
+924, 933, 951
+1422, 1461, 1476
+1713, 1746, 1761
+2067, 2094, 2118
+2307, 2349, 2394
+2586, 2676, 2682
+2973, 3036, 3054
+3294, 3417, 3408
+java -cp target/final-mixed-rand-init-redundant-random-1.0.jar hust.mso.ga.Run_Heur lnoend_100_4_20 6 0.7 0.05
+57, 48, 729
+32, 28, 951
+47, 27, 1476
+52, 33, 1761
+93, 30, 2118
+58, 26, 2394
+55, 21, 2682
+112, 36, 3054
+85, 35, 3408
+java -cp target/final-mixed-rand-init-redundant-random-1.0.jar hust.mso.ga.Run_Heur lnoend_100_4_20 6 0.7 0.05
+57, 48, 69
+32, 28, 67
+47, 27, 170
+52, 33, 153
+93, 30, 98
+58, 26, 209
+55, 21, 205
+112, 36, 209
+85, 35, 211
+java -cp target/final-mixed-rand-init-redundant-random-1.0.jar hust.mso.ga.Run_Heur lnoend_100_4_20 6 0.7 0.05
+-93, -102, -81
+-168, -172, -133
+-153, -173, -30
+-198, -217, -97
+-157, -220, -152
+-242, -274, -91
+-295, -329, -145
+-238, -314, -141
+-315, -365, -189
+java -cp target/final-mixed-rand-init-redundant-random-1.0.jar hust.mso.ga.Run_Heur lnoend_100_4_20 6 0.7 0.05
+-57, -53, -66
+-156, -172, -105
+-144, -162, -100
+-173, -207, -44
+-170, -173, -71
+-247, -270, -130
+-281, -307, -174
+-212, -255, -115
+-262, -297, -185
+java -cp target/final-mixed-rand-init-redundant-random-1.0.jar hust.mso.ga.Run_Heur lnoend_100_4_20 6 0.7 0.05
+36, 28, 67
+40, 27, 94
+45, 21, 84
+58, 27, 203
+42, 26, 160
+53, 30, 170
+53, 24, 173
+97, 54, 210
+80, 28, 159

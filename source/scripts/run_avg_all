@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+script_folder=$(dirname $0)
+source ${script_folder}/naming 
+source config
+
+for v in "${V[@]}"; do
+    echo "[Running] $prefix $v"
+    for r in "${R[@]}"; do
+        echo $(name_folder $v $1 $r) 
+        echo $pc 
+        echo $pm
+    done | parallel -N3 java -cp target/${solver} hust.mso.ga.Main {1} {2} {3} ${cache_dir}
+    # done | parallel -N3 echo {1} {2} {3}
+done

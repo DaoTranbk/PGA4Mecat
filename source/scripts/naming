@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+source config
+
+name_sample() {
+    # echo "${prefix}_$1_$2_$3$ext_sample";
+    echo "${prefix}$1_$2_$3$ext_sample";
+}
+
+name_output() {
+    # echo "${prefix}_$1_$2_$3$ext_output";
+    echo "${prefix}$1_$2_$3$ext_output";
+}
+
+name_folder() {
+    # echo "${prefix}_$1_$2_$3";
+    echo "${prefix}$1_$2_$3";
+}
+
+

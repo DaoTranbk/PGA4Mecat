@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# args: v q r
+
+script_folder=$(dirname $0)
+source ${script_folder}/naming 
+
+out_dir="${out_dir_prefix}/${target}"
+out_file_path="${out_dir}/$(name_output $1 $2 $3)"
+
+# INPUT="${aTuan}/$(name_folder $1 $2 $3)"
+INPUT="$(name_folder $1 $2 $3)"
+echo "... Running $INPUT"
+
+header="Seed, Runtime(s), ${target}"
+
+if [[ -e $out_file_path ]]; then
+    # read -p "The file $out_file_path was existed, re-running (y/n) ? "
+    echo "The file $out_file_path was existed, not re-running."
+else 
+    echo "Writing to the file: $out_file_path";
+    REPLY="y"
+fi
+
+seed=1
+MAX_ROUND=$((MAX_SEED/step))
+counter=0
+if [ $REPLY = "y" ]; then
+    echo "Save to the file: $out_file_path";
+
+    while [[ $counter -le $MAX_ROUND ]]; do
+        if [ $counter -eq 0 ]; then
+            echo $header > $out_file_path
+        fi
+
+        start=$((counter*step+1))
+        end=$((counter*step+step))
+
+        if [ $start -ge $MAX_SEED ]; then break; fi
+        if [ $end -ge $MAX_SEED ]; then end=$MAX_SEED; fi
+
+        echo "... Seed: $start - $end"
+
+        for i in $(seq 1 $step);
+        do
+            seed=$((counter*step+i))
+            if [ $seed -gt $MAX_SEED ]; then break; fi
+
+            echo "$seed"
+            ((i++))
+        # done
+        # done | parallel echo {}
+        done | parallel java -cp target/${solver} hust.mso.ga.Main ${INPUT} {} ${pc} ${pm} >> $out_file_path
+        echo "[DONE]"
+
+        ((counter++));
+    done
+else 
+    echo "DONE - Not re-rerunnig!"
+fi

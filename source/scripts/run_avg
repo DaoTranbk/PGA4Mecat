@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+script_folder=$(dirname $0)
+source ${script_folder}/naming 
+
+if [[ $1 -ne 20 && $1 -ne 30 && $1 -ne 5 ]]; then
+	folder_input="$(name_folder $1 $2 $3)"
+	out_dir="${out_dir_prefix}/${folder_input}"
+
+	if [[ -e $out_dir ]]; then
+	    read -p "The dir $out_dir was existed, re-running (y/n) ? " 
+	    echo "Save to the dir: $out_dir";
+	else 
+	    mkdir -p $out_dir; 
+	    echo "Created the dir: $out_dir";
+	    REPLY="y"
+	fi
+
+	run_with() {
+	    # SOURCE="$(name_folder $1 $2 $3) $(name_folder $4 $5 $6) $(name_folder $7 $8 $9)"
+	    SOURCE="$(name_folder $1 $2 $3) $(name_folder $4 $5 $6)"
+	    echo "... Running $SOURCE"
+
+	    ${script_folder}/run_parallel_seed $1 $2 $3 $4 $5 $6 $7 $8 $9
+	}
+
+	if [ $REPLY = "y" ]; then 
+	    for v2 in "${V[@]}"; do 
+		for r2 in "${R[@]}"; do
+           for v3 in "${V[@]}"; do
+            for r3 in "${R[@]}"; do
+                run_with $1 $2 $3 $v2 $2 $r2 $v3 $2 $r3
+				# run_with $1 $2 $3 $v2 $2 $r2
+            done
+            done
+		done
+	    done
+	    # | parallel run_with $1 $2 $3 $v $2 $r
+	else 
+	    echo "DONE - Not re-rerunnig!"
+	fi
+else 
+	echo "***** DONE *****"
+fi
